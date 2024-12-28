@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}
+Shopkart | Confirm Order
+{% endblock title %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="card p-4 shadow" style="max-width: 600px; width: 100%;">
+    <h2 class="fw-bold mb-4 text-center" style="font-size: 24px; color: #333;">Confirm Your Order</h2>
+    
+    <!-- Order Details -->
+    <div class="mb-4">
+      {% if cart_items %}
+      <h5 class="fw-bold">Order Details</h5>
+      <hr>
+      {% for item in cart_items %}
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <div>
+          <strong>{{ item.product.title }}</strong>
+          <p class="mb-0 text-muted">Quantity: {{ item.quantity }}</p>
+        </div>
+        <div>
+          <span>₹{{ item.product.price }}</span>
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <div class="alert alert-info" role="alert">
+        No items found to confirm. <a href="{% url 'index' %}" class="alert-link">Add products</a> to place an order.
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Address Details -->
+    <div class="mb-4">
+      <h5 class="fw-bold">Shipping Address</h5>
+      <hr>
+      <p class="mb-0">
+        <strong>{{ address.address_line1 }}</strong><br>
+        {{ address.landmark }}, {{ address.city }}, {{ address.state }}, {{ address.pincode }}
+      </p>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="mb-4">
+      <h5 class="fw-bold">Order Summary</h5>
+      <hr>
+      <p class="mb-1"><strong>Total Products: </strong>{{ total_items }}</p>
+      <p class="fw-bold text-primary">Total Amount: ₹{{ total_amount }}</p>
+    </div>
+
+    <!-- Confirm Order Button -->
+    {% if cart_items %}
+   
+      <a href="{% url 'pay' address.id %}"class="btn btn-success w-100">Place Order</a>
+    
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}

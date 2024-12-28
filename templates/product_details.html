@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}
+Shopkart | Home
+{% endblock title %}
+
+{% block content %}
+<div class="container-fluid my-4">
+  <div class="row g-4" style="height: 100vh;">
+    <!-- Left Panel -->
+    <div class="col-lg-5" style="height: 100vh; overflow-y: hidden;">
+      <div class="position-sticky" style="top: 0; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #f8f9fa;">
+        <!-- Product Image -->
+        <div style="max-height: 300px; overflow: hidden; width: 100%; text-align: center;">
+          <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.title|title }}" style="height: 100%; width: auto;">
+        </div>
+        <!-- Buttons -->
+        <div class="mt-4 w-75">
+          <div class="row">
+            <div class="col">
+              <a href="#" class="btn btn-warning w-100">Buy Now</a>
+            </div>
+            <div class="col">
+              <a href="{% url 'addtocart' product.id %}" class="btn btn-warning w-100">Add to Cart</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Left Panel -->
+
+    <!-- Right Panel -->
+    <div class="col-lg-7" style="height: 100vh; overflow-y: auto; padding: 1rem;">
+      <h4 class="fw-bold">{{ product.title|title }}</h4>
+      <p class="text-primary fw-semibold fs-5">
+        {{ product.price }}/- 
+        <span class="text-danger">
+          <del>{{ product.price|add:product.price }}/-</del>
+        </span>
+      </p>
+      <p class="text-success fw-semibold">50% Off</p>
+
+      <h5 class="mt-4 text-secondary fw-semibold">Highlights</h5>
+      <p>{{ product.description }}</p>
+
+      <h5 class="mt-4 text-success fw-semibold">Available Offers</h5>
+      <ul class="list-group">
+        <li class="list-group-item">Bank Offer: 5% Unlimited Cashback on Flipkart Axis Bank Credit Card <span class="text-muted">T&C</span></li>
+        <li class="list-group-item">Special Price: Get extra ?49000 off (price inclusive of cashback/coupon) <span class="text-muted">T&C</span></li>
+        <li class="list-group-item">Freebie: Flat 15% off on hotels up to ?3999 <span class="text-muted">T&C</span></li>
+        <li class="list-group-item">Extra ?100 Off on Nothing Cable <span class="text-muted">T&C</span></li>
+        <li class="list-group-item">Extra 15% off on Combo with Mobile - Samsung <span class="text-muted">T&C</span></li>
+      </ul>
+      <p class="mt-2">1 Year Manufacturer Warranty for Device and 6 Months for In-Box Accessories</p>
+      <p class="text-primary fw-semibold">Delivered by <span class="text-dark ms-1">{{date}}</span></p>
+      <p>7 Days Service Center Replacement/Repair</p>
+      <p>GST invoice available</p>
+      
+    </div>
+    <!-- End Right Panel -->
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,248 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script src="https://kit.fontawesome.com/4d8a7773d5.js" crossorigin="anonymous"></script>
+    <title>{% block title %}
+      
+    {% endblock title %}</title>
+
+    <style>
+      .dropdown:hover .dropdown-menu
+      {
+        display: block;
+      }
+    </style>
+</head>
+<body>
+    <!-------------------------- Header ----------------------------->
+    {% block header %}
+    <div class="row">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'index' %}">
+                    <img src="{% static 'images/shopkart_logo_black.jpeg' %}" alt="Bootstrap" width="80" height="60">
+                </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <form class="d-flex" role="search" action="{% url 'search_product' %}">
+                    <input class="form-control me-2" type="search" placeholder="Search" size="40" aria-label="Search" name="search_bar">
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                  </form>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                    
+                      {% if user.is_authenticated %}
+                      <a class="nav-link dropdown-toggle" href="{% url 'signout' %}" role="button" aria-expanded="false">
+                        <i class="fa-solid fa-circle-user"></i> Logout
+                      </a>
+                      {% else %}
+                      <a class="nav-link dropdown-toggle" href="{% url 'signin' %}" role="button" aria-expanded="false">
+                        <i class="fa-solid fa-circle-user"></i> Login
+                      </a>
+                      {% endif %}
+
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="{% url 'customer_signup' %}">New Customer?<span class="ms-4 text-primary fw-semibold">Sign Up</span></a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="#"> <i class="fa-regular fa-circle-user"></i>&nbsp;&nbsp; My Profile</a></li>
+                      <li><a class="dropdown-item" href="#"><i class="fa-solid fa-plus"></i>&nbsp;&nbsp; Flipkart Plus Zone</a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="fa-solid fa-box-open"></i>&nbsp;&nbsp; Orders</a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="fa-regular fa-heart"></i>&nbsp;&nbsp; Wishlist</a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="fa-solid fa-gift"></i>&nbsp;&nbsp; Rewards</a></li>
+                      <li><a class="dropdown-item" href="#"> <i class="fa-solid fa-money-check-dollar"></i>&nbsp;&nbsp; Gift Cards</a></li>
+
+                    </ul>
+                  </li> 
+
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'cart' %}"><i class="fa-solid fa-cart-shopping"></i> Cart</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'seller_signup' %}"><i class="fa-solid fa-store"></i> Become a Seller</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#"><i class="fa-regular fa-bell"></i>&nbsp;&nbsp; Notification Preferences</a></li>
+                      <li><a class="dropdown-item" href="#"><i class="fa-solid fa-headset"></i>&nbsp;&nbsp; 24x7 Customer Care</a></li>
+                  
+                      <li><a class="dropdown-item" href="#"><i class="fa-solid fa-arrow-trend-up"></i>&nbsp;&nbsp; Advertise</a></li>
+                      <li><a class="dropdown-item" href="#"><i class="fa-solid fa-download"></i>&nbsp;&nbsp; Download App</a></li>
+                    </ul>
+                  </li>
+
+                  {% if user.is_authenticated %}
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-circle-user text-success"></i> {{user.first_name|capfirst}} {{user.last_name|capfirst}}</a>
+                  </li>
+                  {% endif %}
+                  
+                  
+                </ul>
+                
+              </div>
+            </div>
+          </nav>
+
+    </div>
+    <!------------------------------------------------ end navbar ------------------------------------------------->
+
+    <!------------------------------------------------- start cat ------------------------------------------------->
+      <div class="row bg-white m-2 p-3 f-size" >
+
+        <div class="col text-center">
+          <img src="https://rukminim2.flixcart.com/fk-p-flap/64/64/image/698ba0cebe456aaf.jpg?q=100" alt="">
+          <p>Top Offers</p>
+        </div>
+
+        <div class="col text-center">
+          <a href="{% url 'category' %}?product=mobiles and tablets" class="nav-link">
+            <img src="https://rukminim2.flixcart.com/fk-p-flap/64/64/image/44e10b16e649b691.jpg?q=100" alt="">
+            <p>Mobiles & Tablets</p>
+          </a>
+        </div>
+
+        <div class="col text-center">
+          <a href="{% url 'category' %}?product=tvs appliances" class="nav-link">
+            <img src="https://rukminim2.flixcart.com/fk-p-flap/64/64/image/717b5077a5e25324.jpg?q=100" alt="">
+            <p>TVs Appliances</p>
+          </a>
+        </div>
+
+        <div class="col text-center">
+          <a href="{% url 'category' %}?product=electronics" class="nav-link">
+            <img src="https://rukminim2.flixcart.com/fk-p-flap/64/64/image/717b5077a5e25324.jpg?q=100" alt="">
+            <p>Electronics</p>
+          </a>
+        </div>
+
+        <div class="col text-center">
+          <a href="{% url 'category' %}?product=fashion" class="nav-link">
+          <img src="https://rukminim2.flixcart.com/fk-p-flap/64/64/image/9d4e9c605fc1d2d3.jpg?q=100" alt="">
+          <p>Fashion</p>
+          </a>
+        </div>
+
+
+        <div class="col text-center">
+          <a href="{% url 'category' %}?product=beauty" class="nav-link">
+            <img src="https://rukminim2.flixcart.com/fk-p-flap/64/64/image/a5e656672d0548dd.jpg?q=100" alt="">
+            <p>Beauty</p>
+          </a>
+        </div>
+
+        <div class="col text-center">
+          <a href="{% url 'category' %}?product=home and kitchen" class="nav-link">
+            <img src="https://rukminim2.flixcart.com/fk-p-flap/64/64/image/5b813b64a3179898.jpg?q=100" alt="">
+            <p>Home & Kitchen</p>
+          </a>
+        </div>
+
+        <div class="col text-center">
+          <a href="{% url 'category' %}?product=furnitures" class="nav-link">
+            <img src="https://rukminim2.flixcart.com/fk-p-flap/64/64/image/7a5e96c10ada8a56.jpg?q=100" alt="">
+            <p>Furniture</p>
+          </a>
+        </div>
+
+        <div class="col text-center">
+          <a href="{% url 'category' %}?product=travels" class="nav-link">
+            <img src="https://rukminim2.flixcart.com/fk-p-flap/64/64/image/57fe1ffe54569c41.jpg?q=100" alt="">
+            <p>Travel</p>
+          </a>
+        </div>
+
+        <div class="col text-center">
+          <a href="{% url 'category' %}?product=groceries" class="nav-link">
+            <img src="https://rukminim2.flixcart.com/fk-p-flap/64/64/image/25f400c36bc3487d.jpg?q=100" alt="">
+            <p>Grocery</p>
+          </a>
+        </div>
+
+
+        
+
+      </div>
+     <!------------------------------------------------- end cat ------------------------------------------------->
+    {% endblock header %}
+
+    <!-------------------------- Content ----------------------------->
+    {% block content %}
+      
+    {% endblock content %}
+
+    <!-------------------------- Footer ----------------------------->
+    {% block footer %}
+    <footer class="bd-footer py-4 py-md-5 mt-1 bg-body-tertiary">
+        <div class="container py-4 py-md-5 px-4 px-md-3 text-body-secondary">
+          <div class="row">
+            <div class="col-lg-3 mb-3">
+              <a class="d-inline-flex align-items-center mb-2 text-body-emphasis text-decoration-none" href="/" aria-label="Bootstrap">
+                <img src="{% static 'images/shopkart_logo_black.jpeg' %}" alt="Bootstrap" width="150" height="130">
+                
+              </a>
+              <ul class="list-unstyled small">
+                <li class="mb-2">Designed and built with all the love in the world by the <a href="/docs/5.3/about/team/">Bootstrap team</a> with the help of <a href="https://github.com/twbs/bootstrap/graphs/contributors">our contributors</a>.</li>
+                <li class="mb-2">Code licensed <a href="https://github.com/twbs/bootstrap/blob/main/LICENSE" target="_blank" rel="license noopener">MIT</a>, docs <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="license noopener">CC BY 3.0</a>.</li>
+                <li class="mb-2">Currently v5.3.3.</li>
+              </ul>
+            </div>
+            <div class="col-6 col-lg-2 offset-lg-1 mb-3">
+              <h5>Links</h5>
+              <ul class="list-unstyled">
+                <li class="mb-2"><a href="/">Home</a></li>
+                <li class="mb-2"><a href="/docs/5.3/">Docs</a></li>
+                <li class="mb-2"><a href="/docs/5.3/examples/">Examples</a></li>
+                <li class="mb-2"><a href="https://icons.getbootstrap.com/">Icons</a></li>
+                <li class="mb-2"><a href="https://themes.getbootstrap.com/">Themes</a></li>
+                <li class="mb-2"><a href="https://blog.getbootstrap.com/">Blog</a></li>
+                <li class="mb-2"><a href="https://cottonbureau.com/people/bootstrap" target="_blank" rel="noopener">Swag Store</a></li>
+              </ul>
+            </div>
+            <div class="col-6 col-lg-2 mb-3">
+              <h5>Guides</h5>
+              <ul class="list-unstyled">
+                <li class="mb-2"><a href="/docs/5.3/getting-started/">Getting started</a></li>
+                <li class="mb-2"><a href="/docs/5.3/examples/starter-template/">Starter template</a></li>
+                <li class="mb-2"><a href="/docs/5.3/getting-started/webpack/">Webpack</a></li>
+                <li class="mb-2"><a href="/docs/5.3/getting-started/parcel/">Parcel</a></li>
+                <li class="mb-2"><a href="/docs/5.3/getting-started/vite/">Vite</a></li>
+              </ul>
+            </div>
+            <div class="col-6 col-lg-2 mb-3">
+              <h5>Projects</h5>
+              <ul class="list-unstyled">
+                <li class="mb-2"><a href="https://github.com/twbs/bootstrap" target="_blank" rel="noopener">Bootstrap 5</a></li>
+                <li class="mb-2"><a href="https://github.com/twbs/bootstrap/tree/v4-dev" target="_blank" rel="noopener">Bootstrap 4</a></li>
+                <li class="mb-2"><a href="https://github.com/twbs/icons" target="_blank" rel="noopener">Icons</a></li>
+                <li class="mb-2"><a href="https://github.com/twbs/rfs" target="_blank" rel="noopener">RFS</a></li>
+                <li class="mb-2"><a href="https://github.com/twbs/examples/" target="_blank" rel="noopener">Examples repo</a></li>
+              </ul>
+            </div>
+            <div class="col-6 col-lg-2 mb-3">
+              <h5>Community</h5>
+              <ul class="list-unstyled">
+                <li class="mb-2"><a href="https://github.com/twbs/bootstrap/issues" target="_blank" rel="noopener">Issues</a></li>
+                <li class="mb-2"><a href="https://github.com/twbs/bootstrap/discussions" target="_blank" rel="noopener">Discussions</a></li>
+                <li class="mb-2"><a href="https://github.com/sponsors/twbs" target="_blank" rel="noopener">Corporate sponsors</a></li>
+                <li class="mb-2"><a href="https://opencollective.com/bootstrap" target="_blank" rel="noopener">Open Collective</a></li>
+                <li class="mb-2"><a href="https://stackoverflow.com/questions/tagged/bootstrap-5" target="_blank" rel="noopener">Stack Overflow</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
+    {% endblock footer %}
+</body>
+</html>

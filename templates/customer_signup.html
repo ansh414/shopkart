@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Cutomer SignUp  
+{% endblock title %}
+
+{% block header %}
+<div class="row">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'index' %}">
+              <img src="{% static 'images/shopkart_logo_black.jpeg' %}" alt="Bootstrap" width="80" height="60">
+          </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item dropdown">
+              
+            </li> 
+
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'index' %}"><i class="fa-solid fa-house"></i> Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'seller_signup' %}"><i class="fa-solid fa-store"></i> Become a Seller</a>
+            </li>
+            
+            
+          </ul>
+          
+        </div>
+      </div>
+    </nav>
+
+</div>
+<!------------------------------------------------ end navbar ------------------------------------------------->
+  
+{% endblock header %}
+
+{% block content %}
+<div style="width: 50%; margin: auto;" class="bg-body-tertiary p-3 shadow my-4">
+
+    <p class="text-primary fw-semibold fs-3 py-3">Customer SignUp</p>
+    
+    <form action="" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{form.as_p}}
+
+      <input type="submit" value="SignUp" class="btn btn-primary">
+    </form>
+
+  </div>
+{% endblock content %}

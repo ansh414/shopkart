@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block carousel %}
+  
+{% endblock carousel %}
+
+{% block content %}
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="col">
+        <h5>Saved Addresses</h5>
+        {% for i in address %}
+        <span><strong>Address {{forloop.counter}} :</strong></span><a href="{% url 'confirm_order' i.id %}" class="nav-link"><p>{{i.address_line1}},{{i.landmark}}{{i.pincode}}</p></a>
+        <a href="{% url 'update_address' i.id %}" class="btn btn-sm btn-warning">Edit</a>
+        <a href="{% url 'remove_address' i.id %}" class="btn btn-sm btn-danger">Delete</a>
+        <hr>
+        {% empty %}
+          <h3>No address found</h3>
+        {% endfor %}
+
+      </div>
+
+      <div class="col">
+        <form action="" method="post">
+          {% csrf_token %}
+          <div class="col-12 m2">
+            <label for="inputaddress">Address line 1</label>
+            <input type="text" placeholder="1234 Main st" class="form-control" name="address" {% if update_address %} value="{{update_address.address_line1}}" {% endif %}  required>
+          </div>
+
+          <div class="col-12 m2">
+            <label for="inputaddress">Landmark</label>
+            <input type="text" placeholder="1234 Main st" class="form-control" name="landmark" {% if update_address %} value="{{update_address.landmark}}" {% endif %} required>
+          </div>
+
+          <div class="col-12 m2">
+            <label for="inputaddress">City</label>
+            <input type="text" placeholder="1234 Main st" class="form-control" name="city" {% if update_address %} value="{{update_address.city}}" {% endif %} required>
+          </div>
+
+          <div class="col-12 m2">
+            <label for="inputaddress">State</label>
+            <input type="text" placeholder="1234 Main st" class="form-control" name="state" {% if update_address %} value="{{update_address.state}}" {% endif %} required>
+          </div>
+
+
+          <div class="col-12 m2">
+            <label for="inputpincode">Pincode</label>
+            <input type="text" placeholder="450000" minlength="6" maxlength="6" name="pincode" class="form-control"{% if update_address %} value="{{update_address.pincode}}" {% endif %} required>
+          </div>
+
+          <div class="col-12">
+            {% if update_address %}
+            <button type="submit" class="btn btn-primary mt-3">Update Address</button>
+            {% else %}
+            <button type="submit" class="btn btn-primary mt-3">Add New Address</button>
+            {% endif %}
+           
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+{% endblock content %}

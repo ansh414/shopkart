@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+SignIn
+{% endblock title %}
+
+{% block content %}
+<div style="width: 50%; margin: auto;" class="bg-body-tertiary p-3 shadow mt-4">
+
+    <p class="text-primary fw-semibold fs-3 py-3">SignIn</p>
+    
+    <form action="" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{form.as_p}}
+
+      <input type="submit" value="SignIn" class="btn btn-primary">
+    </form>
+
+    <a href="{% url 'forgot_password' %}">Forgot Password?</a>
+
+  </div>
+{% endblock content %}
